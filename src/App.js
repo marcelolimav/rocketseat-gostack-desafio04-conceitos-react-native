@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import api from './services/api';
+
 import {
   SafeAreaView,
   View,
@@ -10,8 +12,6 @@ import {
   SectionList,
 } from "react-native";
 
-import api from './services/api';
-
 export default function App() {
   const [repositories, setRepositories] = useState([]);
 
@@ -19,11 +19,23 @@ export default function App() {
     api.get('repositories').then(response => {
       setRepositories(response.data);
     })
-  });
+  },[]);
   
   async function handleLikeRepository(id) {
     // Implement "Like Repository" functionality
     const response = await api.post(`repositories/${id}/like`);
+    
+    const likedRepository = response.data;
+
+    const repositoriesUpdated = repositories.map(repository => {
+      if ( repository.id === id){
+        return likedRepository;
+      } else {
+        return repository;
+      }
+    });
+
+    setRepositories(repositoriesUpdated);
   }
 
   return (
@@ -33,7 +45,7 @@ export default function App() {
         <FlatList
           data={repositories}
           keyExtractor={repository => repository.id}
-          renderItem={({ item: repository}) =>(
+          renderItem={({ item: repository }) =>(
             <View style={styles.repositoryContainer}>
               <Text style={styles.repository}>{repository.title}</Text>
 
@@ -56,7 +68,7 @@ export default function App() {
                   // Remember to replace "1" below with repository ID: {`repository-likes-${repository.id}`}
                   testID={`repository-likes-${repository.id}`}
                 >
-                  {repository.likes} curtida{repository.likes<=1? '' : 's'} 
+                  {repository.likes} curtida{repository.likes > 1 ? 's' : ''} 
                 </Text>
               </View>
               
