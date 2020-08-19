@@ -1,7 +1,7 @@
 # Desafio 04: Rocketseat/GoSatck
 
 # Conceitos do React Native
-<p alin="center"><b>Aplicação para estudos em React Native:</b> Aplicativo GoMarketplace</p>
+<p alin="center"><b>Aplicação para estudos em React Native:</b> Repositórios do seu portfólio</p>
 
 ## 🚀 Sobre
 Desafio sobre conceitos do React Native aplicado no Bootcamp GoStack da Rocketseat. 
